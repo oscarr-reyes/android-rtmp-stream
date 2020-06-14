@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import dev.oscarreyes.rtmp.RtmpStream;
 import dev.oscarreyes.rtmpstreamtest.R;
 
 public class MainActivity extends BaseActivity {
 	private boolean isStreaming = false;
 
 	private ImageButton streamButton;
+	private RtmpStream rtmpStream;
 
 	private final String[] PERMISSIONS = new String[]{
 		Manifest.permission.RECORD_AUDIO
@@ -33,7 +35,7 @@ public class MainActivity extends BaseActivity {
 
 	@Override
 	protected void onPermissionsGranted() {
-		super.onPermissionsGranted();
+		this.rtmpStream = new RtmpStream();
 	}
 
 	@Override
@@ -41,13 +43,27 @@ public class MainActivity extends BaseActivity {
 		super.onPermissionsDenied();
 	}
 
-	public void onButtonClick(View view) {
-		this.isStreaming = !this.isStreaming;
+	private void startStream() {
+		this.rtmpStream.start();
 
-		if (this.isStreaming) {
-			this.streamButton.setBackgroundResource(R.drawable.ic_stop);
-		} else {
-			this.streamButton.setBackgroundResource(R.drawable.ic_play_arrow);
+		this.isStreaming = true;
+		this.streamButton.setBackgroundResource(R.drawable.ic_stop);
+	}
+
+	private void stopStream() {
+		this.rtmpStream.stop();
+
+		this.isStreaming = false;
+		this.streamButton.setBackgroundResource(R.drawable.ic_play_arrow);
+	}
+
+	public void onButtonClick(View view) {
+		if (this.rtmpStream != null) {
+			if (this.isStreaming) {
+				this.stopStream();
+			} else {
+				this.startStream();
+			}
 		}
 	}
 }
