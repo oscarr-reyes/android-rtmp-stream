@@ -133,6 +133,7 @@ public class AudioEncoder {
 			frame.flags = bufferInfo.flags;
 			frame.timestamp = bufferInfo.presentationTimeUs;
 			frame.data = new byte[bufferInfo.size];
+			frame.info = bufferInfo;
 
 			byteBuffer.get(frame.data);
 

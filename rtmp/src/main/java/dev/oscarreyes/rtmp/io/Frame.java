@@ -7,4 +7,5 @@ public class Frame {
 	public int size;
 	public long timestamp;
 	public byte[] data;
+	public MediaCodec.BufferInfo info;
 }

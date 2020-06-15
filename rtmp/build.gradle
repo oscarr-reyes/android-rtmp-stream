@@ -3,6 +3,7 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+    ndkVersion '21.2.6472646'
 
     defaultConfig {
         minSdkVersion 27
@@ -18,6 +19,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path file('CMakeLists.txt')
         }
     }
 }
